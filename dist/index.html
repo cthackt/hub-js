@@ -1,9 +1,33 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Webpack App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><script defer src="runtime.js"></script><script defer src="main.js"></script></head>
-  <body>
-  </body>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width">
+   <link rel="stylesheet" href="./index.css">
+   <link rel="stylesheet" type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@esri/hub-components@beta/dist/calcite/calcite.css" />
+   <script src="./main.js"></script>
+   <script src="./runtime.js"></script>
+
+   <title>Search Esri</title>
+</head>
+
+<body>
+   <div class="search-bar">
+      <input type="text" id="search-field" class="search-field" name="search-field" placeholder="Search..." value="chemistry">
+      <button id="search-clear" class="search-clear">X</button>
+      <button id="search-button" class="search-button">Search</button>
+   </div><br><br>
+
+   <h2>Gallery Results</h2>
+   <div id="search-gallery" class="gallery container"></div>
+
+   <h2>JSON Results</h2>
+   <p id="search" class="results"></p>
+   
+   <script type="module" src="https://cdn.jsdelivr.net/npm/@esri/hub-components@beta/dist/hub-components/hub-components.esm.js"></script>
+</body>
+
 </html>

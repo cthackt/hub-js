@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script type="module" src="https://js.arcgis.com/calcite-components/1.0.0-beta.82/calcite.esm.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.0-beta.82/calcite.css" />
+   <title>--- ArcGIS Search Demo ---</title>
+</head>
+<body>
+
+   <div style="text-align: center; padding: 100px">
+      <calcite-button id="authenticate">Authenticate</calcite-button>
+   </div>
+
+   <script type="module">
+      
+      import { ArcGISIdentityManager } from 'https://cdn.skypack.dev/@esri/arcgis-rest-request@4.0.0';
+      import { ContentSearchService } from "../../node_modules/@esri/hub-search/dist/esm/content/index.js";
+
+      let session = null;
+      const clientId = "M92CmlbtoKVEJZvL";
+      const redirectUri = window.location.origin + "/hub-js/demos/search-content/authenticate.html";
+
+      const serializedSession = localStorage.getItem("__ARCGIS_REST_USER_SESSION__"); // Check to see if there is a serialized session in local storage.
+
+      if (serializedSession !== null && serializedSession !== "undefined") {
+        session = ArcGISIdentityManager.deserialize(serializedSession);
+      }
+
+      function updateSessionInfo(session) {
+        let sessionInfo = document.getElementById("sessionInfo");
+
+        if (session) {
+          localStorage.setItem("__ARCGIS_REST_USER_SESSION__", session.serialize());
+        } else {
+          console.error("Something went wrong :(")
+        }
+      }
+
+      updateSessionInfo(session);
+
+      document.getElementById("authenticate").addEventListener("click", (event) => {
+        // Begin an OAuth2 login using a popup.
+        ArcGISIdentityManager.beginOAuth2({
+          clientId: clientId,
+          redirectUri: redirectUri,
+          popup: true
+        })
+          .then((newSession) => {
+            // Upon a successful login, update the session with the new session.
+            session = newSession;
+            console.log(session);
+            updateSessionInfo(session);
+            console.log(">> authenticated! <<")
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+            .then()
+        event.preventDefault();
+
+      });
+
+      
+
+   </script>
+</body>
+</html>
